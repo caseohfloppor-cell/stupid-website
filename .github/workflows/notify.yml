@@ -10,15 +10,7 @@ jobs:
     runs-on: self-hosted
     timeout-minutes: 2
     steps:
-      - name: Download plink with timeout
-        shell: powershell
-        run: |
-          $ProgressPreference = 'SilentlyContinue'
-          Invoke-WebRequest -Uri "https://the.earth.li/~sgtatham/putty/latest/w64/plink.exe" -OutFile "plink.exe" -TimeoutSec 30
-          Write-Output "plink downloaded!"
-          .\plink.exe -V
-
       - name: SSH into phone
         shell: cmd
         run: |
-          echo y | plink.exe -pw claude -P 8022 -batch u0_a427@10.0.4.38 "uname -a && whoami && pwd"
+          plink.exe -pw claude -P 8022 -hostkey "ssh-ed25519 255 SHA256:5M9xnh+FpWIM9BZIEa1lK0uydRI8pGydQ1AzqXpuMUU" u0_a427@10.0.4.38 "uname -a && whoami && pwd"
