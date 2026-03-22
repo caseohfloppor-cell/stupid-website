@@ -1,0 +1,15 @@
+name: Send Phone Notification
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  notify:
+    runs-on: self-hosted
+    steps:
+      - name: Send ADB Notification to Phone
+        run: |
+          adb devices
+          adb shell cmd notification post -S bigtext -t "🔥 GitHub Says Hi" "ClaudeNotif" "Claude just hacked your phone lmao"
