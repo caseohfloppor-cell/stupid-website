@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Very Important Website</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #0a0a0a;
+      color: white;
+      font-family: 'Comic Sans MS', cursive;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+      text-align: center;
+    }
+    h1 {
+      font-size: 4rem;
+      animation: rainbow 1s infinite;
+      text-shadow: 3px 3px 0px red;
+    }
+    @keyframes rainbow {
+      0%{color:red} 15%{color:orange} 30%{color:yellow}
+      45%{color:green} 60%{color:blue} 75%{color:indigo} 100%{color:violet}
+    }
+    #cat {
+      font-size: 8rem;
+      animation: spin 2s linear infinite;
+      display: inline-block;
+      margin: 20px;
+    }
+    @keyframes spin {
+      from{transform:rotate(0deg)} to{transform:rotate(360deg)}
+    }
+    p {
+      font-size: 1.5rem;
+      margin: 10px;
+      animation: bounce 0.5s infinite alternate;
+    }
+    @keyframes bounce {
+      from{transform:translateY(0)} to{transform:translateY(-10px)}
+    }
+    #counter {
+      font-size: 2rem;
+      color: lime;
+      margin-top: 20px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 15px 30px;
+      font-size: 1.5rem;
+      font-family: 'Comic Sans MS', cursive;
+      background: red;
+      color: white;
+      border: 5px dashed yellow;
+      cursor: pointer;
+      animation: wiggle 0.3s infinite;
+      border-radius: 10px;
+    }
+    @keyframes wiggle {
+      0%{transform:rotate(-2deg)} 100%{transform:rotate(2deg)}
+    }
+    button:hover { background: hotpink; font-size: 2rem; }
+    #message { font-size: 2rem; margin-top: 20px; min-height: 50px; }
+    .stars {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0; left: 0;
+      pointer-events: none;
+      z-index: -1;
+    }
+  </style>
+</head>
+<body>
+  <canvas class="stars" id="stars"></canvas>
+  <h1>🚨 VERY IMPORTANT WEBSITE 🚨</h1>
+  <div id="cat">🐱</div>
+  <p>You have reached the most important page on the internet.</p>
+  <p>Congratulations. You played yourself.</p>
+  <div id="counter">Button mashed: 0 times</div>
+  <button onclick="mash()">DO NOT PRESS</button>
+  <div id="message"></div>
+
+  <script>
+    let count = 0;
+    const msgs = [
+      "bro why did you press it",
+      "I SAID DO NOT PRESS",
+      "ok you know what fine",
+      "ur actually cooked",
+      "the cat is disappointed in you",
+      "STOP PRESSING IT",
+      "ok actually keep going its funny",
+      "you have too much free time",
+      "skill issue",
+      "W rizz tho ngl",
+      "the button has feelings too 😢",
+      "certified button abuser",
+      "FBI OPEN UP",
+      "you're going to the shadow realm",
+      "based",
+    ];
+    function mash() {
+      count++;
+      document.getElementById('counter').textContent = `Button mashed: ${count} times`;
+      document.getElementById('message').textContent = msgs[Math.floor(Math.random() * msgs.length)];
+      document.getElementById('cat').style.animationDuration = Math.max(0.1, 2 - count * 0.05) + 's';
+    }
+
+    // Starfield
+    const canvas = document.getElementById('stars');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const stars = Array.from({length: 150}, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: Math.random() * 2,
+      speed: Math.random() * 0.5 + 0.1
+    }));
+    function drawStars() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = 'white';
+      stars.forEach(s => {
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fill();
+        s.y += s.speed;
+        if (s.y > canvas.height) s.y = 0;
+      });
+      requestAnimationFrame(drawStars);
+    }
+    drawStars();
+  </script>
+</body>
+</html>
