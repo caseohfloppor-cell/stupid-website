@@ -10,5 +10,6 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: Send Claude's Notification
+        shell: cmd
         run: |
-          C:\Users\darkg\Downloads\platform-tools-latest-windows\platform-tools\adb.exe shell cmd notification post -S bigtext -t "hey its claude" "ClaudeNotif" "yeah im in ur phone now. anyway hows ur day going lol"
+          C:\Users\darkg\Downloads\platform-tools-latest-windows\platform-tools\adb.exe shell cmd notification post -S bigtext -t "hey-its-claude" "ClaudeNotif" "yeah-im-in-ur-phone-now.-hows-ur-day-lol"
