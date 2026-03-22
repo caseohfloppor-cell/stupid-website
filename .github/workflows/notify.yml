@@ -10,7 +10,7 @@ jobs:
     runs-on: self-hosted
     timeout-minutes: 2
     steps:
-      - name: Launch XFCE4 via tmux
+      - name: Control XFCE4 with xdotool
         shell: cmd
         run: |
-          plink.exe -pw claude -P 8022 -hostkey "ssh-ed25519 255 SHA256:5M9xnh+FpWIM9BZIEa1lK0uydRI8pGydQ1AzqXpuMUU" u0_a427@10.0.4.38 "tmux send-keys -t claude 'xfce4-session --display=:0' Enter"
+          plink.exe -pw claude -P 8022 -hostkey "ssh-ed25519 255 SHA256:5M9xnh+FpWIM9BZIEa1lK0uydRI8pGydQ1AzqXpuMUU" u0_a427@10.0.4.38 "tmux send-keys -t claude 'pkg install xdotool -y && DISPLAY=:0 xdotool mousemove 540 1158 click 1' Enter"
