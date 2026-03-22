@@ -9,7 +9,7 @@ jobs:
   notify:
     runs-on: self-hosted
     steps:
-      - name: Send Claude's Notification
+      - name: Open YouTube
         shell: cmd
         run: |
-          C:\Users\darkg\Downloads\platform-tools-latest-windows\platform-tools\adb.exe shell cmd notification post -S bigtext -t "hey its claude" "ClaudeNotif" "yeah im in ur phone now. hows ur day lol"
+          C:\Users\darkg\Downloads\platform-tools-latest-windows\platform-tools\adb.exe shell am start -n com.google.android.youtube/.app.honeycomb.Shell
