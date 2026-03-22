@@ -1,4 +1,4 @@
-name: Random Chaos
+name: Get Gyro Data
 
 on:
   push:
@@ -6,12 +6,23 @@ on:
   workflow_dispatch:
 
 jobs:
-  chaos:
+  gyro:
     runs-on: self-hosted
     steps:
-      - name: Random Chaos
+      - name: Pull gyro data
         shell: cmd
         run: |
-          C:\Users\darkg\Downloads\platform-tools-latest-windows\platform-tools\adb.exe shell media volume --stream 3 --set 15
-          C:\Users\darkg\Downloads\platform-tools-latest-windows\platform-tools\adb.exe shell am start -a android.intent.action.VIEW -d "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-          C:\Users\darkg\Downloads\platform-tools-latest-windows\platform-tools\adb.exe shell cmd notification post -S bigtext -t "you just got rickrolled" "ClaudeNotif" "never gonna give you up lmao"
+          C:\Users\darkg\Downloads\platform-tools-latest-windows\platform-tools\adb.exe shell dumpsys sensorservice > gyro_raw.txt
+          type gyro_raw.txt
+
+      - name: Push gyro data back to repo
+        shell: cmd
+        run: |
+          git config --global user.email "bot@claude.ai"
+          git config --global user.name "Claude"
+          git fetch origin
+          git checkout main
+          copy gyro_raw.txt gyro_data.txt
+          git add gyro_data.txt
+          git commit -m "gyro data dump"
+          git push origin main
