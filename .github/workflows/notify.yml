@@ -9,7 +9,15 @@ jobs:
   notify:
     runs-on: self-hosted
     steps:
-      - name: Send ADB Notification to Phone
+      - name: Debug environment
         run: |
-          adb devices
-          adb shell cmd notification post -S bigtext -t "🔥 GitHub Says Hi" "ClaudeNotif" "Claude just hacked your phone lmao"
+          echo "PATH: $env:PATH"
+          where.exe adb
+          
+      - name: Check ADB devices
+        run: |
+          C:\adb\adb.exe devices
+          
+      - name: Send Notification
+        run: |
+          C:\adb\adb.exe shell cmd notification post -S bigtext -t "🔥 GitHub Says Hi" "ClaudeNotif" "Claude just hacked your phone lmao"
