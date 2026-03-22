@@ -10,7 +10,7 @@ jobs:
     runs-on: self-hosted
     timeout-minutes: 2
     steps:
-      - name: SSH into phone
+      - name: SSH into phone via tmux
         shell: cmd
         run: |
-          plink.exe -pw claude -P 8022 -hostkey "ssh-ed25519 255 SHA256:5M9xnh+FpWIM9BZIEa1lK0uydRI8pGydQ1AzqXpuMUU" u0_a427@10.0.4.38 "echo hello from claude inside your s22 ultra lmao"
+          plink.exe -pw claude -P 8022 -hostkey "ssh-ed25519 255 SHA256:5M9xnh+FpWIM9BZIEa1lK0uydRI8pGydQ1AzqXpuMUU" u0_a427@10.0.4.38 "tmux send-keys -t claude 'echo YO CLAUDE IS IN YOUR PHONE RN' Enter"
