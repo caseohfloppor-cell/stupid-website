@@ -9,18 +9,21 @@ jobs:
   ssh:
     runs-on: self-hosted
     steps:
-      - name: SSH into phone and run commands
+      - name: SSH into phone
         shell: powershell
         run: |
-          $password = "claude"
           $ip = "10.0.4.38"
           $port = "8022"
           $user = "u0_a427"
+          $password = "claude"
+          $cmd = "uname -a && whoami && df -h && cat /proc/cpuinfo | grep Hardware | head -1"
+
+          # Use built-in Windows SSH with sshpass workaround via net use
+          # Write expect-like script
+          $sshCommand = "ssh -o StrictHostKeyChecking=no -o PasswordAuthentication=yes -p $port $user@$ip `"$cmd`""
           
-          # Install sshpass equivalent for windows via plink (putty)
-          # Use plink if available, otherwise use ssh with password via expect
-          choco install putty -y 2>$null
+          # Use plink download directly
+          Invoke-WebRequest -Uri "https://the.earth.li/~sgtatham/putty/latest/w64/plink.exe" -OutFile "plink.exe"
           
-          $cmd = "uname -a && whoami && pwd && ls && cat /proc/cpuinfo | grep 'Hardware' | head -1"
-          
-          echo "y" | & "C:\Program Files\PuTTY\plink.exe" -pw $password -P $port "$user@$ip" $cmd
+          # Accept host key and run command
+          cmd /c "echo y | plink.exe -pw $password -P $port $user@$ip $cmd"
