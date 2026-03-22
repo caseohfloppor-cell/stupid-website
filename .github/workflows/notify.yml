@@ -9,20 +9,18 @@ jobs:
   gyro:
     runs-on: self-hosted
     steps:
-      - name: Pull gyro data
-        shell: cmd
+      - name: Read and send gyro data
+        shell: powershell
         run: |
-          C:\Users\darkg\Downloads\platform-tools-latest-windows\platform-tools\adb.exe shell dumpsys sensorservice > gyro_raw.txt
-          type gyro_raw.txt
+          $adb = "C:\Users\darkg\Downloads\platform-tools-latest-windows\platform-tools\adb.exe"
+          $data = & $adb shell dumpsys sensorservice
+          $gyroLine = $data | Select-String -Pattern "Gyro|gyro|GYRO" | Select-Object -First 3
+          Write-Output $gyroLine
+          
+          # Also get orientation
+          $orient = & $adb shell dumpsys display | Select-String -Pattern "mCurrentOrientation|orientation"
+          Write-Output $orient
 
-      - name: Push gyro data back to repo
-        shell: cmd
-        run: |
-          git config --global user.email "bot@claude.ai"
-          git config --global user.name "Claude"
-          git fetch origin
-          git checkout main
-          copy gyro_raw.txt gyro_data.txt
-          git add gyro_data.txt
-          git commit -m "gyro data dump"
-          git push origin main
+          # Send as notification
+          $gyroText = $gyroLine -join " | "
+          & $adb shell cmd notification post -S bigtext -t "Gyro Data" "ClaudeNotif" "$gyroText"
