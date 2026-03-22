@@ -1,4 +1,4 @@
-name: Get Gyro Data
+name: SSH into Phone
 
 on:
   push:
@@ -6,21 +6,21 @@ on:
   workflow_dispatch:
 
 jobs:
-  gyro:
+  ssh:
     runs-on: self-hosted
     steps:
-      - name: Read and send gyro data
+      - name: SSH into phone and run commands
         shell: powershell
         run: |
-          $adb = "C:\Users\darkg\Downloads\platform-tools-latest-windows\platform-tools\adb.exe"
-          $data = & $adb shell dumpsys sensorservice
-          $gyroLine = $data | Select-String -Pattern "Gyro|gyro|GYRO" | Select-Object -First 3
-          Write-Output $gyroLine
+          $password = "claude"
+          $ip = "10.0.4.38"
+          $port = "8022"
+          $user = "u0_a427"
           
-          # Also get orientation
-          $orient = & $adb shell dumpsys display | Select-String -Pattern "mCurrentOrientation|orientation"
-          Write-Output $orient
-
-          # Send as notification
-          $gyroText = $gyroLine -join " | "
-          & $adb shell cmd notification post -S bigtext -t "Gyro Data" "ClaudeNotif" "$gyroText"
+          # Install sshpass equivalent for windows via plink (putty)
+          # Use plink if available, otherwise use ssh with password via expect
+          choco install putty -y 2>$null
+          
+          $cmd = "uname -a && whoami && pwd && ls && cat /proc/cpuinfo | grep 'Hardware' | head -1"
+          
+          echo "y" | & "C:\Program Files\PuTTY\plink.exe" -pw $password -P $port "$user@$ip" $cmd
