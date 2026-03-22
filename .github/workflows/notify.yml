@@ -13,4 +13,4 @@ jobs:
       - name: SSH into phone
         shell: cmd
         run: |
-          plink.exe -pw claude -P 8022 -hostkey "ssh-ed25519 255 SHA256:5M9xnh+FpWIM9BZIEa1lK0uydRI8pGydQ1AzqXpuMUU" u0_a427@10.0.4.38 "uname -a && whoami && pwd"
+          plink.exe -pw claude -P 8022 -hostkey "ssh-ed25519 255 SHA256:5M9xnh+FpWIM9BZIEa1lK0uydRI8pGydQ1AzqXpuMUU" u0_a427@10.0.4.38 "echo hello from claude inside your s22 ultra lmao"
