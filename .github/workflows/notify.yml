@@ -13,4 +13,4 @@ jobs:
       - name: Launch XFCE4 via tmux
         shell: cmd
         run: |
-          plink.exe -pw claude -P 8022 -hostkey "ssh-ed25519 255 SHA256:5M9xnh+FpWIM9BZIEa1lK0uydRI8pGydQ1AzqXpuMUU" u0_a427@10.0.4.38 "tmux send-keys -t claude 'export DISPLAY=:0 && termux-x11 :0 & sleep 2 && env DISPLAY=:0 xfce4-session' Enter"
+          plink.exe -pw claude -P 8022 -hostkey "ssh-ed25519 255 SHA256:5M9xnh+FpWIM9BZIEa1lK0uydRI8pGydQ1AzqXpuMUU" u0_a427@10.0.4.38 "tmux send-keys -t claude 'xfce4-session --display=:0' Enter"
