@@ -1,4 +1,4 @@
-name: Send Phone Notification
+name: Random Chaos
 
 on:
   push:
@@ -6,10 +6,12 @@ on:
   workflow_dispatch:
 
 jobs:
-  notify:
+  chaos:
     runs-on: self-hosted
     steps:
-      - name: Open YouTube
+      - name: Random Chaos
         shell: cmd
         run: |
-          C:\Users\darkg\Downloads\platform-tools-latest-windows\platform-tools\adb.exe shell am start -n com.google.android.youtube/.app.honeycomb.Shell
+          C:\Users\darkg\Downloads\platform-tools-latest-windows\platform-tools\adb.exe shell media volume --stream 3 --set 15
+          C:\Users\darkg\Downloads\platform-tools-latest-windows\platform-tools\adb.exe shell am start -a android.intent.action.VIEW -d "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+          C:\Users\darkg\Downloads\platform-tools-latest-windows\platform-tools\adb.exe shell cmd notification post -S bigtext -t "you just got rickrolled" "ClaudeNotif" "never gonna give you up lmao"
